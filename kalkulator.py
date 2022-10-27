@@ -29,7 +29,7 @@ class Kalkulator():
         for kalkulator in self.kalkulatory_procentow:
             kalkulator.set_struktura_przychodu(self.suma_wszystkich_przychodow)
             print(
-                f'{kalkulator.procent * 100}%: {int(kalkulator.struktura_przychodu * 100)} %')
+                f'{kalkulator.procent * 100}%: {kalkulator.suma_przychodow} / {self.suma_wszystkich_przychodow} = {int(kalkulator.struktura_przychodu * 100)} %')
 
     def licz_odliczenia(self):
         self.odliczenia = round(self.ubezpieczenie_spoleczne +
@@ -38,18 +38,19 @@ class Kalkulator():
     def licz_rozliczenie_odliczen(self):
         for kalkulator in self.kalkulatory_procentow:
             kalkulator.set_odliczenie(self.odliczenia)
-            print(f'{kalkulator.procent * 100}%: {kalkulator.odliczenie} zl')
+            print(f'{kalkulator.procent * 100}%: {kalkulator.struktura_przychodu * 100} % * {self.odliczenia} = {kalkulator.odliczenie} zl')
 
     def licz_podstawa_opodatkowania(self):
         for kalkulator in self.kalkulatory_procentow:
             kalkulator.set_podstawa_opodatkowania()
             print(
-                f'{kalkulator.procent * 100}%: {kalkulator.podstawa_opodatkowania} zl')
+                f'{kalkulator.procent * 100}%: {kalkulator.suma_przychodow} - {kalkulator.odliczenie} = {kalkulator.podstawa_opodatkowania} zl')
 
     def licz_podatek(self):
         for kalkulator in self.kalkulatory_procentow:
             kalkulator.set_podatek()
-            print(f'{kalkulator.procent * 100}%: {kalkulator.podatek} zl')
+            print(
+                f'{kalkulator.procent * 100}% * {kalkulator.podstawa_opodatkowania} = {kalkulator.podatek} zl')
 
     def licz_suma_podatku(self):
         suma: float = 0.0
