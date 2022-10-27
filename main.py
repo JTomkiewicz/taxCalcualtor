@@ -1,16 +1,40 @@
 from kalkulator import Kalkulator
 
 
-def main():
+def dane_wejciowe() -> Kalkulator:
+    stawki: list = [0.03, 0.055, 0.085, 0.12, 0.14, 0.15, 0.17]
+
     kalkulator = Kalkulator()
 
-    kalkulator.dodaj_kalkulator_procent(
-        [2000, 200, 185, 1100, 2000, 210, - 120, 20], 0.03)
-    kalkulator.dodaj_kalkulator_procent([500, 1000, 500], 0.055)
-    kalkulator.dodaj_kalkulator_procent([100, 250, 200, -50], 0.085)
+    print('Podawanie stawek. Wpisz 0, aby zakonczyc podwanie kwot dla konkretnej stawki.')
 
-    kalkulator.dodaj_ubezpieczenie_spoleczne(500)
-    kalkulator.dodaj_ubezpieczenie_zdrowotne(150)
+    for stawka in stawki:
+        kwoty: list = []
+        while True:
+            try:
+                kwota = int(
+                    input(f'Podaj kwote dla stawki {round(stawka * 100, 1)}%: '))
+            except ValueError:
+                print("Sorry, I didn't understand that.")
+
+            if kwota == 0:
+                break
+            kwoty.append(kwota)
+
+        if kwoty:
+            kalkulator.dodaj_kalkulator_procent(kwoty, stawka)
+
+    ubezpieczenie_spoleczne = input('Podaj kwote ubezpieczenia spoleczengo: ')
+    kalkulator.dodaj_ubezpieczenie_spoleczne(ubezpieczenie_spoleczne)
+
+    ubezpieczenie_zdrowotne = input('Podaj kwote ubezpieczenia zdrowotnego: ')
+    kalkulator.dodaj_ubezpieczenie_spoleczne(ubezpieczenie_zdrowotne)
+
+    return kalkulator
+
+
+def main():
+    kalkulator = dane_wejciowe()
 
     print('--- Przychody wg stawek ---')
     kalkulator.licz_przychody_wg_stawek()
