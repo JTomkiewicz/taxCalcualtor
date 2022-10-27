@@ -1,42 +1,23 @@
-class KalkulatorProcent():
-    def __init__(self, koszta, procent):
-        self.przychody = koszta
-        self.procent = procent
-        self.suma_przychodow = self.set_suma_przychodow()
-        self.struktura_przychodu = 0
-        self.odliczenie = 0
-        self.podstawa_opodatkowania = 0
-
-    def set_suma_przychodow(self):
-        suma = 0
-        for przychod in self.przychody:
-            suma += przychod
-        return suma
-
-    def set_struktura_przychodu(self, suma_wszystkich_kosztow):
-        self.struktura_przychodu = self.suma_przychodow / suma_wszystkich_kosztow
-
-    def set_odliczenie(self, suma_odliczen):
-        self.odliczenie = self.struktura_przychodu * suma_odliczen
-
-    def set_podstawa_opodatkowania(self):
-        self.podstawa_opodatkowania = int(self.procent - self.odliczenie)
-
-    def set_podatek(self):
-        self.podatek = self.procent * self.podstawa_opodatkowania
+from kalkulator_procent import KalkulatorProcent
 
 
 class Kalkulator():
     def __init__(self):
-        self.kalkulatory_procentow = []
-        self.ubezpieczenie_spoleczne = 0
-        self.ubezpieczenie_zdrowotne = 0
-        self.suma_wszystkich_przychodow = 0
-        self.odliczenia = 0
-        self.podatek = 0
+        self.kalkulatory_procentow: list = []
+        self.ubezpieczenie_spoleczne: float = 0.0
+        self.ubezpieczenie_zdrowotne: float = 0.0
+        self.suma_wszystkich_przychodow: float = 0.0
+        self.odliczenia: float = 0.0
+        self.podatek: float = 0.0
 
-    def dodaj_kalkulator_procent(self, koszta, procent):
+    def dodaj_kalkulator_procent(self, koszta: list, procent: float) -> None:
         self.kalkulatory_procentow.append(KalkulatorProcent(koszta, procent))
+
+    def dodaj_ubezpieczenie_spoleczne(self, kwota: float):
+        self.ubezpieczenie_spoleczne = kwota
+
+    def dodaj_ubezpieczenie_zdrowotne(self, kwota: float):
+        self.ubezpieczenie_zdrowotne = kwota
 
     def licz_przychody_wg_stawek(self):
         for kalkulator in self.kalkulatory_procentow:
@@ -47,11 +28,12 @@ class Kalkulator():
     def licz_struktura_przychodow(self):
         for kalkulator in self.kalkulatory_procentow:
             kalkulator.set_struktura_przychodu(self.suma_wszystkich_przychodow)
-            print(f'{kalkulator.procent * 100}%: {kalkulator.struktura_przychodu}%')
+            print(
+                f'{kalkulator.procent * 100}%: {int(kalkulator.struktura_przychodu * 100)} %')
 
     def licz_odliczenia(self):
-        self.odliczenia = self.ubezpieczenie_spoleczne + \
-            (0.5 * self.ubezpieczenie_zdrowotne)
+        self.odliczenia = round(self.ubezpieczenie_spoleczne +
+                                (0.5 * self.ubezpieczenie_zdrowotne), 2)
 
     def licz_rozliczenie_odliczen(self):
         for kalkulator in self.kalkulatory_procentow:
@@ -70,7 +52,7 @@ class Kalkulator():
             print(f'{kalkulator.procent * 100}%: {kalkulator.podatek} zl')
 
     def licz_suma_podatku(self):
-        suma = 0
+        suma: float = 0.0
         for kalkulator in self.kalkulatory_procentow:
             suma += kalkulator.podatek
-        print(f'Suma podatku: {suma} zl')
+        print(f'Suma podatku: {round(suma, 2)} zl')

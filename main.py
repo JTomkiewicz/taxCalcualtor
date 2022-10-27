@@ -1,4 +1,4 @@
-from calculator import Kalkulator
+from kalkulator import Kalkulator
 
 
 def main():
@@ -9,8 +9,8 @@ def main():
     kalkulator.dodaj_kalkulator_procent([500, 1000, 500], 0.055)
     kalkulator.dodaj_kalkulator_procent([100, 250, 200, -50], 0.085)
 
-    kalkulator.ubezpiecznie_spoleczne = 500
-    kalkulator.ubezpiecznie_zdrowotne = 150
+    kalkulator.dodaj_ubezpieczenie_spoleczne(500)
+    kalkulator.dodaj_ubezpieczenie_zdrowotne(150)
 
     print('--- Przychody wg stawek ---')
     kalkulator.licz_przychody_wg_stawek()
