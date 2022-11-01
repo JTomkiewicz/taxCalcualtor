@@ -19,42 +19,42 @@ class TaxCalculator():
         self.paid_health_insurance = paid_health_insurance
 
     def calculate_revenue_tax_rates(self):
-        for obj in self.rate_calculators:
-            print(f'{obj.rate * 100}%: {obj.costs_sum} PLN')
-            self.revenue_tax_rates_sum += obj.costs_sum
+        for rc in self.rate_calculators:
+            print(f'{rc.rate * 100}%: {rc.costs_sum} PLN')
+            self.revenue_tax_rates_sum += rc.costs_sum
         print(
             f'Revenue tax rates sum (suma przychodu): {self.revenue_tax_rates_sum} PLN')
 
     def calculate_revenue_structure(self):
-        for obj in self.rate_calculators:
-            obj.set_revenue_structure(self.revenue_tax_rates_sum)
+        for rc in self.rate_calculators:
+            rc.set_revenue_structure(self.revenue_tax_rates_sum)
             print(
-                f'{obj.rate * 100}%: {obj.costs_sum} / {self.revenue_tax_rates_sum} = {int(obj.revenue_structure * 100)} %')
+                f'{rc.rate * 100}%: {rc.costs_sum} / {self.revenue_tax_rates_sum} = {int(rc.revenue_structure * 100)} %')
 
     def calculate_ss_hi_deduction(self):
         self.deduction = round(self.paid_social_security +
                                (0.5 * self.paid_health_insurance), 2)
 
     def calculate_deductions(self):
-        for obj in self.rate_calculators:
-            obj.set_deduction(self.deduction)
+        for rc in self.rate_calculators:
+            rc.set_deduction(self.deduction)
             print(
-                f'{obj.rate * 100}%: {obj.revenue_structure * 100} % * {self.deduction} = {obj.deduction} PLN')
+                f'{rc.rate * 100}%: {rc.revenue_structure * 100} % * {self.deduction} = {rc.deduction} PLN')
 
     def calculate_tax_base(self):
-        for obj in self.rate_calculators:
-            obj.set_tax_base()
+        for rc in self.rate_calculators:
+            rc.set_tax_base()
             print(
-                f'{obj.rate * 100}%: {obj.costs_sum} - {obj.deduction} = {obj.tax_base} PLN')
+                f'{rc.rate * 100}%: {rc.costs_sum} - {rc.deduction} = {rc.tax_base} PLN')
 
     def calculate_tax_rates(self):
-        for obj in self.rate_calculators:
-            obj.set_tax_rate()
+        for rc in self.rate_calculators:
+            rc.set_tax_rate()
             print(
-                f'{obj.rate * 100}% * {obj.tax_base} = {obj.tax_rate} PLN')
+                f'{rc.rate * 100}% * {rc.tax_base} = {rc.tax_rate} PLN')
 
     def calculate_tax_sum(self):
         sum: float = 0.0
-        for obj in self.rate_calculators:
-            sum += obj.tax_rate
+        for rc in self.rate_calculators:
+            sum += rc.tax_rate
         print(f'Tax sum (suma podatku): {round(sum, 2)} PLN')
