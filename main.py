@@ -1,59 +1,61 @@
-from kalkulator import Kalkulator
+from tax_calculator import TaxCalculator
 
 
-def dane_wejciowe() -> Kalkulator:
-    stawki: list = [0.03, 0.055, 0.085, 0.12, 0.14, 0.15, 0.17]
+def get_input_data() -> TaxCalculator:
+    rates: list = [0.03, 0.055, 0.085, 0.12, 0.14, 0.15, 0.17]
 
-    kalkulator = Kalkulator()
+    kalkulator = TaxCalculator()
 
-    print('Podawanie stawek. Wpisz 0, aby zakonczyc podwanie kwot dla konkretnej stawki.')
+    print('Enter 0 to go to the following lump sum (podaj 0 aby przejsc do nastepnej stawki ryczaltu)')
 
-    for stawka in stawki:
-        kwoty: list = []
+    for rate in rates:
+        costs: list = []
         while True:
             try:
-                kwota = int(
-                    input(f'Podaj kwote dla stawki {round(stawka * 100, 1)}%: '))
+                cost = int(
+                    input(f'Input cost for rate (kwota dla stawki) {round(rate * 100, 1)}%: '))
             except ValueError:
-                print("Sorry, I didn't understand that.")
+                print("Error occured (wystapil blad)")
 
-            if kwota == 0:
+            if cost == 0:
                 break
-            kwoty.append(kwota)
+            costs.append(cost)
 
-        if kwoty:
-            kalkulator.dodaj_kalkulator_procent(kwoty, stawka)
+        if costs:
+            kalkulator.set_costs_for_rate(costs, rate)
 
-    ubezpieczenie_spoleczne = input('Podaj kwote ubezpieczenia spoleczengo: ')
-    kalkulator.dodaj_ubezpieczenie_spoleczne(ubezpieczenie_spoleczne)
+    paid_social_security = input(
+        'Input paid social security (oplacone ubezpieczenie spolecze): ')
+    kalkulator.set_paid_social_security(paid_social_security)
 
-    ubezpieczenie_zdrowotne = input('Podaj kwote ubezpieczenia zdrowotnego: ')
-    kalkulator.dodaj_ubezpieczenie_spoleczne(ubezpieczenie_zdrowotne)
+    paid_health_insurance = input(
+        'Input paid health insurance (oplacone ubezpieczenie zdrowotne): ')
+    kalkulator.set_paid_health_insurance(paid_health_insurance)
 
     return kalkulator
 
 
 def main():
-    kalkulator = dane_wejciowe()
+    kalkulator = get_input_data()
 
-    print('--- Przychody wg stawek ---')
-    kalkulator.licz_przychody_wg_stawek()
+    print('--- revenues according to tax rates (przychody wg stawek) ---')
+    kalkulator.calculate_revenue_tax_rates()
 
-    print('--- Struktura przychodow ---')
-    kalkulator.licz_struktura_przychodow()
+    print('--- revenue structure (struktura przychodow) ---')
+    kalkulator.calculate_revenue_structure()
 
-    print('--- Rozliczenie odliczen ---')
-    kalkulator.licz_odliczenia()
-    kalkulator.licz_rozliczenie_odliczen()
+    print('--- deductions (odliczenia) ---')
+    kalkulator.calculate_ss_hi_deduction()
+    kalkulator.calculate_deductions()
 
-    print('--- Podstawa opodatkowania ---')
-    kalkulator.licz_podstawa_opodatkowania()
+    print('--- tax base (podstawa opodatkowania) ---')
+    kalkulator.calculate_tax_base()
 
-    print('--- Podatek ---')
-    kalkulator.licz_podatek()
+    print('--- tax grouped into rates (podatek pogrupowany na stawki) ---')
+    kalkulator.calculate_tax_rates()
 
-    print('--- Suma ---')
-    kalkulator.licz_suma_podatku()
+    print('--- tax sum (suma podatku) ---')
+    kalkulator.calculate_tax_sum()
 
 
 if __name__ == "__main__":

@@ -1,18 +1,22 @@
-# Opis
+# taxCalculator
 
-Program ma za zadanie liczyc sume podatku do zaplacenia, biorac pod uwage poniesione koszta i zaplacone ubezpieczenie.
+## Program description
 
-# Dane wejsciowe
+Script designed to calculate the amount of tax to be paid at the end of the month, considering incurred costs and paid insurance.
 
-- koszta pogrupowane na stawki ryczaltu (3%, 5.5%, 8.5%, 12%, 14%, 15%, 17%)
-- zaplacone ubezpieczenie spoleczne
-- zaplacone ubezpieczenie zdrowotne
+## Input data
 
-# Dane wyjsciowe
+- incurred costs grouped into appropriate lump sum rates (3%, 5.5%, 8.5%, 12%, 14%, 15%, 17%)
+- paid social security
+- paid health insurance
 
-- Przychody wg stawek podatkowych
-- Struktura przychodow
-- Rozliczanie odliczen
-- Podstawa opodatkowania
-- Podatek
-- Suma podatku
+All costs are in PLN.
+
+## Output data
+
+- revenues according to tax rates
+- revenue structure
+- deductions
+- tax base
+- tax grouped into rates
+- tax sum
