@@ -1,4 +1,4 @@
-# taxCalculator
+# tax_calculator
 
 ## Program description
 
